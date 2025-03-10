@@ -1,0 +1,16 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-family: arial;
+  font-size: 12pt;
+}
+canvas {
+  display: block;
+}
+
+#control-panel {
+  position: absolute;
+  top: 60vh;
+  margin: 10vh;
+}
