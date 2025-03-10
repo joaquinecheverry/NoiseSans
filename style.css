@@ -10,7 +10,61 @@ canvas {
 }
 
 #control-panel {
-  position: absolute;
-  top: 60vh;
-  margin: 10vh;
+  position: fixed;
+  top: 89.5%;
+  left: 5%;
+  transform: translateY(-50%); /* Only transform vertically */
+  margin: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  padding: 1%;
+}
+
+#shape-select-panel {
+  position: fixed;
+  top: 75%;
+  left: 5%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 5px; /* Added for consistency */
+  padding: 1%; /* Added for consistency */
+}
+
+input[type="range"] {
+  width: 100%;          /* Width of slider */
+  height: 10px;         /* Height of slider track */
+  border-radius: 5px;   /* Rounded corners */
+  background: #ddd;     /* Track color */
+  outline: none;        /* Remove outline */
+  appearance: none;     /* Remove default styling */
+}
+
+/* Slider thumb (the draggable part) */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(255, 119, 0);
+  cursor: pointer;
+}
+
+/* Firefox support */
+input[type="range"]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+#text-input-panel  {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1%;
+
 }
