@@ -1,18 +1,64 @@
-html, body {
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -6%;
+}
+
+body {
   margin: 0;
   padding: 0;
-  color: black;
-  font-family: arial;
-  font-size: 12pt;
 }
+
+#control-panel, #shape-select-panel, #text-input-panel {
+  opacity: 0; 
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Initially disable interaction */
+}
+
+p {
+  font-size: 150pt;
+  color: white;
+  box-shadow: 
+  0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
+  0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
+  inset 0 -3px 3px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
+  inset 0 1px 3px rgba(227, 227, 227, 0.5); /* Top highlight */
+}
+
+#landing {
+  height: 100vh;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -6%;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(214, 214, 214);
+  align-items: center;
+  text-align: center;
+}
+
+.landing-content {
+
+  overflow: hidden;
+  border: none;
+  outline: none;
+left: -20vh;
+  position: relative;
+  top: -14vh;
+}
+
+
+/* You might need to modify your existing canvas styling */
 canvas {
   display: block;
 }
 
 #control-panel {
   position: fixed;
-  top: 89.5%;
-  left: 5%;
+  top: 80.5%;
+  left: 2%;
   transform: translateY(-50%); /* Only transform vertically */
   margin: 0;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -22,20 +68,103 @@ canvas {
 
 #shape-select-panel {
   position: fixed;
-  top: 75%;
-  left: 5%;
+  top: 65%;
+  left: 2%;
+  background-color: white;
+  border-radius: 5px;
+  padding: 0.8%;
+  padding-left: 1%;
+  width: 240px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  border-radius: 5px; /* Added for consistency */
-  padding: 1%; /* Added for consistency */
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  gap: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+/* Panel label */
+#shape-select-panel span {
+  display: inline-block;
+  color: #000;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+/* Select dropdown styling */
+#shape-select-panel select {
+  width: 100%;
+  padding: 5px 10px;
+  border: 0.00px solid #ffffff;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #333;
+  appearance: non e;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  cursor: pointer;
+  box-shadow: 
+  0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
+  0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
+  inset 0 -3px 3px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
+  inset 0 1px 3px rgba(227, 227, 227, 0.5); /* Top highlight */
+  transition: all 0.2s;
+  flex-grow: 1;
+}
+
+#shape-select-panel select:hover {
+  box-shadow: 
+  0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
+  0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
+  inset 0 -3px 3px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
+  inset 0 3px 5px rgba(39, 39, 39, 0.5); /* Top highlight */
+}
+
+#shape-select-panel select:focus {
+  outline: none;
+  border-color: #ff7000;
+  box-shadow: 0 0 0 1px rgba(255,112,51,0.2);
+}
+#shape-select-panel::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  background-color: #ff7700;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  pointer-events: none; /* Ensure clicks pass through to the select */
+}
+
+/* Option styling */
+#shape-select-panel select option {
+  padding: 10px;
+  background-color: white;
+  color: #333;
+}
+
+
 
 input[type="range"] {
   width: 100%;          /* Width of slider */
   height: 10px;         /* Height of slider track */
   border-radius: 5px;   /* Rounded corners */
-  background: #ddd;     /* Track color */
+  background: #ededed;     /* Track color */
   outline: none;        /* Remove outline */
   appearance: none;     /* Remove default styling */
+  box-shadow: 
+  0 1px 1px rgba(128, 128, 128, 0.1), /* Outer shadow for depth */
+  0 1px 1px rgba(123, 123, 123, 0.08), /* Subtle shadow */
+  inset 0 -1px 1px rgba(180, 180, 180, 0.2), /* Bottom inner shadow */
+  inset 0 1px 1px rgba(183, 183, 183, 0.5); /* Top highlight */
 }
 
 /* Slider thumb (the draggable part) */
@@ -46,6 +175,11 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   background: rgb(255, 119, 0);
   cursor: pointer;
+  box-shadow: 
+  0 1px 1px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
+  0 1px 1px rgba(0, 0, 0, 0.08), /* Subtle shadow */
+  inset 0 -1px 1px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
+  inset 0 1px 1px rgba(227, 227, 227, 0.5); /* Top highlight */
 }
 
 /* Firefox support */
@@ -57,14 +191,116 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
-#text-input-panel  {
+/* Style for the container */
+#text-input-panel {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   position: fixed;
-  top: 90%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 1%;
+  top: 92.5%;
+  left: 2%;
+  transform: translateY(-50%);
+  padding: 8px;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+}
 
+/* Style for the label */
+#text-input-panel span {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  color: #000000;
+  white-space: nowrap;
+}
+
+/* Style for the input field */
+#text-input-panel input {
+  padding: 5px 7px;
+  border: 0.001px solid #ffffff;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  width: 150px;
+  box-shadow: 
+  0 1px 1px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
+  0 1px 1px rgba(0, 0, 0, 0.08), /* Subtle shadow */
+  inset 0 -3px 3px rgba(151, 151, 151, 0.2), /* Bottom inner shadow */
+  inset 0 2px 4px rgba(167, 167, 167, 0.5); /* Top highlight */
+  transition: border-color 0.3s;
+}
+
+#text-input-panel input:focus {
+  outline: none;
+  border-color: #ff7700;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+/* Style for the button */
+#text-input-panel button {
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  color: white;
+  border: 0.000px solid rgb(232, 232, 232);
+  border-radius: 50%; /* Make it perfectly round */
+  padding: 5px 5px;
+  cursor: pointer;
+  box-shadow: 
+    0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
+    0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
+    inset 0 -2px 2px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
+    inset 0 1px 2px rgba(227, 227, 227, 0.5); /* Top highlight */
+  transition: all 0.2s ease;
+  position: relative;
+  transform: translateY(0);
+}
+
+#text-input-panel button:hover {
+  box-shadow: 
+    0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
+    0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
+    inset 0 -3px 3px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
+    inset 0 2px 4px rgba(29, 29, 29, 0.5); /* Top highlight */
+}
+
+#text-input-panel button:active {
+  background-color: white;
+}
+
+/* Add this for the orange dot */
+#text-input-panel button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  background-color: #ff7700;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+/* Dot states for hover and active */
+#text-input-panel button:hover::after {
+  background-color: #ff8800;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+#text-input-panel button:active::after {
+  background-color: #e86c00;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+Copy/* Modify your existing control panel CSS */
+#control-panel, #shape-select-panel, #text-input-panel {
+  position: fixed;
+  left: 2%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  /* Add this to initially hide the panels */
+  opacity: 0;
+  transition: opacity 0.1s ease;
 }
