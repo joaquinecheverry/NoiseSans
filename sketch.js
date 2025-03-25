@@ -1,4 +1,4 @@
-let densitySlider, sizeSlider, speedSlider, chaosSlider;
+    let densitySlider, sizeSlider, speedSlider, chaosSlider;
 let shapeSelect;
 let textInput; // Text input field
 let inputText = ""; // Store the user's input text
@@ -344,9 +344,9 @@ function setup() {
   
   // Add each control as a row in the table
   addControlRow(table, 'Speed', speedSlider = createSlider(0, 0.1, 0.01, 0.001));
-  addControlRow(table, 'Quantity', densitySlider = createSlider(5, 50, 10, 1));
-  addControlRow(table, 'Size', sizeSlider = createSlider(0.1, 1.5, 0.5, 0.01));
-  addControlRow(table, 'Chaos', chaosSlider = createSlider(0, 5, 0, 0.1));
+  addControlRow(table, 'Quantity', densitySlider = createSlider(3, 20, 6, 0.1));
+  addControlRow(table, 'Size', sizeSlider = createSlider(0.1, 2.3 , 0.5, 0.01));
+  addControlRow(table, 'Chaos', chaosSlider = createSlider(0, 50, 50, 0.01));
 }
 
 // Helper function to add a control row to the table
@@ -511,30 +511,28 @@ function drawInputText(rectDensity, sizeVariation, chaosLevel) {
   
   const letterWidth = gridWidth * scaleFactor;
   const letterHeight = gridHeight * scaleFactor;
-  const spacing = letterWidth * 0.3; // Space between letters
+  const spacing = letterWidth * 0.3; 
   
-  // Calculate total width of the text
+
   const totalWidth = (letterWidth * inputText.length) + (spacing * (inputText.length - 1));
   
-  // Center the text horizontally
+
   let startX = (width - totalWidth) / 2;
   const startY = (height - letterHeight) / 2;
   
-  // Adjust density for text display
+
   let adjustedDensity = rectDensity * 0.6;
   
-  // Draw each letter in the input text
+
   for (let i = 0; i < inputText.length; i++) {
     const char = inputText[i];
-    // Check if the character exists in our shapes
+  
     if (shapes[char]) {
       drawLetterAtPosition(char, startX, startY, letterWidth, letterHeight, adjustedDensity, sizeVariation, chaosLevel);
     } else if (char === ' ') {
-      // Handle space character
-      // Just move to the next position
+
     } else {
-      // For unknown characters, you could draw a default shape or skip
-      // Here we'll draw the 'A' shape as a fallback
+  
       drawLetterAtPosition('A', startX, startY, letterWidth, letterHeight, adjustedDensity, sizeVariation, chaosLevel);
     }
     
@@ -547,8 +545,7 @@ function drawLetterAtPosition(letterKey, offsetX, offsetY, letterWidth, letterHe
   const activeShape = shapes[letterKey];
   const rows = activeShape.length;      
   const cols = activeShape[0].length;   
-  
-  // Calculate cell dimensions based on the grid size
+
   const cellWidth = letterWidth / cols;
   const cellHeight = letterHeight / rows;
   
@@ -558,7 +555,7 @@ function drawLetterAtPosition(letterKey, offsetX, offsetY, letterWidth, letterHe
     for (let col = 0; col < cols; col++) {
       if (activeShape[row][col] === 1) {
         let numRects = Math.floor(map(noise(col * noiseFrequency, row * noiseFrequency, noiseSeedOffset), 0, 1, rectDensity - 2, rectDensity));
-        numRects = max(1, numRects); // Ensure at least 1 rectangle
+        numRects = max(1, numRects); 
         
         for (let i = 0; i < numRects; i++) {
           // Apply chaos level to position offsets
