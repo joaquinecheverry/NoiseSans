@@ -27,8 +27,9 @@ body {
   letter-spacing: -6%;
   display: flex;
   justify-content: center;
-  background-color: rgb(214, 214, 214);
+  background-color: white;
   align-items: center;
+  z-index: -20;
   text-align: center;
 }
 .landing-content {
@@ -42,15 +43,14 @@ body {
 
 #title {
   font-size: 210pt;
-  color: white;
-  
+  color: black;
   margin: 0;
   top: -15%;
   position: relative;
 }
 
 #mail {
-  color: white;
+  color: black;
   font-size: 17pt;
   left: 1.7%;
   top: 23%;
@@ -60,11 +60,10 @@ body {
 #description {
   font-size: 17pt;
   width: 50%;
-
   position: relative;
   text-align: left;
-  color: white;
-  margin-top: -20vh; /* Adjust as needed to position relative to title */
+  color: black;
+  margin-top: -20vh; 
   margin-left: 3vh;
 }
 
@@ -75,27 +74,24 @@ canvas {
 
 #control-panel {
   position: fixed;
-  top: 80.5%;
+  top: 78.5%;
   left: 2%;
-  transform: translateY(-50%); /* Only transform vertically */
-  margin: 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  border-radius: 5px;
+  transform: translateY(-50%); 
+
+  font-size: 17pt;
   padding: 1%;
 }
 
 #shape-select-panel {
   position: fixed;
-  top: 65%;
+  top: 60%;
   left: 2%;
   background-color: white;
-  border-radius: 5px;
   padding: 0.8%;
-  padding-left: 1%;
+  padding-left: 1.2%;
   width: 240px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   font-family: "Geist", sans-serif;
-  font-optical-sizing: auto;
+  font-size: 17pt;
   gap: 15px;
   display: flex;
   flex-direction: row;
@@ -106,65 +102,42 @@ canvas {
 #shape-select-panel span {
   display: inline-block;
   color: #000;
-  margin-right: 10px;
   white-space: nowrap;
+  text-align: center;
+  align-items: center;
 }
 
 /* Select dropdown styling */
 #shape-select-panel select {
-  width: 100%;
-  padding: 5px 10px;
-  border: 0.00px solid #ffffff;
-  border-radius: 8px;
-  background-color: #ffffff;
-  font-size: 14px;
-  color: #333;
+  width: 50%;  
+  background-color:black;
+  font-size: 12pt;
+  color: white;
+  border: #000;
   appearance: non e;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
   cursor: pointer;
-  box-shadow: 
-  0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
-  0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
-  inset 0 -3px 3px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
-  inset 0 1px 3px rgba(227, 227, 227, 0.5); /* Top highlight */
   transition: all 0.2s;
   flex-grow: 1;
 }
 
-#shape-select-panel select:hover {
-  box-shadow: 
-  0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
-  0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
-  inset 0 -3px 3px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
-  inset 0 3px 5px rgba(39, 39, 39, 0.5); /* Top highlight */
+object {
+  position: absolute;
+  width:160px;
+  height: auto;
+  left: 150vh;
+  top: 50vh;
 }
 
-#shape-select-panel select:focus {
-  outline: none;
-  border-color: #ff7000;
-  box-shadow: 0 0 0 1px rgba(255,112,51,0.2);
+#shape-select-panel select:hover {
+background-color:  chartreuse;
 }
-#shape-select-panel::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 25px;
-  transform: translateY(-50%);
-  width: 5px;
-  height: 5px;
-  background-color: #ff7700;
-  border-radius: 50%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  pointer-events: none; /* Ensure clicks pass through to the select */
-}
+
+
 
 /* Option styling */
 #shape-select-panel select option {
-  padding: 10px;
   background-color: white;
   color: #333;
 }
@@ -172,32 +145,21 @@ canvas {
 
 
 input[type="range"] {
-  width: 100%;          /* Width of slider */
-  height: 10px;         /* Height of slider track */
-  border-radius: 5px;   /* Rounded corners */
-  background: #ededed;     /* Track color */
+  width: 150%;          /* Width of slider */
+  height: 20px;         /* Height of slider track */
+  background: white;     /* Track color */
   outline: none;        /* Remove outline */
   appearance: none;     /* Remove default styling */
-  box-shadow: 
-  0 1px 1px rgba(128, 128, 128, 0.1), /* Outer shadow for depth */
-  0 1px 1px rgba(123, 123, 123, 0.08), /* Subtle shadow */
-  inset 0 -1px 1px rgba(180, 180, 180, 0.2), /* Bottom inner shadow */
-  inset 0 1px 1px rgba(183, 183, 183, 0.5); /* Top highlight */
+  color: white;
 }
 
 /* Slider thumb (the draggable part) */
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgb(255, 119, 0);
+  height: 20px;
+  background: black;
   cursor: pointer;
-  box-shadow: 
-  0 1px 1px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
-  0 1px 1px rgba(0, 0, 0, 0.08), /* Subtle shadow */
-  inset 0 -1px 1px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
-  inset 0 1px 1px rgba(227, 227, 227, 0.5); /* Top highlight */
 }
 
 /* Firefox support */
@@ -212,16 +174,15 @@ input[type="range"]::-moz-range-thumb {
 /* Style for the container */
 #text-input-panel {
   background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 92.5%;
   left: 2%;
   transform: translateY(-50%);
   padding: 8px;
-  padding-left: 15px;
+  padding-left: 16px;
   display: flex;
   align-items: center;
+  font-size: 17pt;
 }
 
 /* Style for the label */
@@ -234,24 +195,17 @@ input[type="range"]::-moz-range-thumb {
 
 /* Style for the input field */
 #text-input-panel input {
-  padding: 5px 7px;
-  border: 0.001px solid #ffffff;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  font-size: 14px;
+  background-color: black;
+  font-size: 17pt;
+  color: white;
   width: 150px;
-  box-shadow: 
-  0 1px 1px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
-  0 1px 1px rgba(0, 0, 0, 0.08), /* Subtle shadow */
-  inset 0 -3px 3px rgba(151, 151, 151, 0.2), /* Bottom inner shadow */
-  inset 0 2px 4px rgba(167, 167, 167, 0.5); /* Top highlight */
-  transition: border-color 0.3s;
+  appearance: none;
+  border: white;
+  height: 20px;
 }
 
 #text-input-panel input:focus {
   outline: none;
-  border-color: #ff7700;
-  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
 }
 
 /* Style for the button */
@@ -261,14 +215,8 @@ input[type="range"]::-moz-range-thumb {
   background-color: #ffffff;
   color: white;
   border: 0.000px solid rgb(232, 232, 232);
-  border-radius: 50%; /* Make it perfectly round */
   padding: 5px 5px;
   cursor: pointer;
-  box-shadow: 
-    0 2px 3px rgba(0, 0, 0, 0.1), /* Outer shadow for depth */
-    0 1px 3px rgba(0, 0, 0, 0.08), /* Subtle shadow */
-    inset 0 -2px 2px rgba(19, 19, 19, 0.2), /* Bottom inner shadow */
-    inset 0 1px 2px rgba(227, 227, 227, 0.5); /* Top highlight */
   transition: all 0.2s ease;
   position: relative;
   transform: translateY(0);
@@ -293,22 +241,20 @@ input[type="range"]::-moz-range-thumb {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 5px;
-  height: 5px;
-  background-color: #ff7700;
-  border-radius: 50%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  width: 20px;
+  height: 20px;
+  background-color: black;
   transition: all 0.2s ease;
 }
 
 /* Dot states for hover and active */
 #text-input-panel button:hover::after {
-  background-color: #ff8800;
+  background-color: chartreuse;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 #text-input-panel button:active::after {
-  background-color: #e86c00;
+  background-color: chartreuse;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -316,8 +262,6 @@ Copy/* Modify your existing control panel CSS */
 #control-panel, #shape-select-panel, #text-input-panel {
   position: fixed;
   left: 2%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  border-radius: 5px;
   /* Add this to initially hide the panels */
   opacity: 0;
   transition: opacity 0.1s ease;
