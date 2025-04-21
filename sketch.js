@@ -1,7 +1,7 @@
-    let densitySlider, sizeSlider, speedSlider, chaosSlider;
+let densitySlider, sizeSlider, speedSlider, chaosSlider;
 let shapeSelect;
 let textInput; // Text input field
-let inputText = ""; // Store the user's input text
+let inputText = "PERLIN SANS"; // Store the user's input text
 let noiseOffset = 0;
 let gridWidth, gridHeight;
 let padding = 100;
@@ -262,38 +262,18 @@ let controlDiv;
 let shapeSelectDiv;
 let textInputDiv; // Div for text input
 
-function windowScrolled() {
-  const scrollY = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const controlPanels = document.querySelectorAll('#control-panel, #shape-select-panel, #text-input-panel');
-  
-  // Show panels only when scrolled past the landing page
-  if (scrollY >= windowHeight * 0.7) {
-    controlPanels.forEach(panel => {
-      panel.style.opacity = '1';
-      panel.style.pointerEvents = 'auto'; // Enable interaction
-    });
-  } else {
-    controlPanels.forEach(panel => {
-      panel.style.opacity = '0';
-      panel.style.pointerEvents = 'none'; // Disable interaction when hidden
-    });
-  }
-}
+let scrollX = 0;
 
-// Call the function immediately on page load to set initial state
-window.addEventListener('load', windowScrolled);
 
-// Add scroll event listener
-window.addEventListener('scroll', windowScrolled);
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(30);
   noiseDetail(4, 0.5);
   
-  gridWidth = 400;
-  gridHeight = 600;
+  gridWidth = 500;
+  gridHeight = 730;
   
   // Create a container div for slider controls
   controlDiv = createDiv('');
@@ -326,30 +306,20 @@ function setup() {
   const textLabel = createElement('span', 'Enter Text:');
   textLabel.parent(textInputDiv);
   textLabel.style('margin-right', '10px');
-  
+    
   textInput = createInput('');
   textInput.parent(textInputDiv);
   textInput.input(textInputChanged);
-  textInput.attribute('maxlength', '20'); // Limit text length
-  
-  // Add a button to toggle text display mode
-  const showTextBtn = createButton('');
-  showTextBtn.parent(textInputDiv);
-  showTextBtn.style('margin-left', '10px');
-  showTextBtn.mousePressed(toggleTextDisplay);
-  
-  // Create a table structure for the slider controls
+
   const table = createElement('table');
   table.parent(controlDiv);
   
-  // Add each control as a row in the table
   addControlRow(table, 'Speed', speedSlider = createSlider(0, 0.1, 0.01, 0.001));
   addControlRow(table, 'Quantity', densitySlider = createSlider(3, 20, 6, 0.1));
   addControlRow(table, 'Size', sizeSlider = createSlider(0.1, 2.3 , 0.5, 0.01));
   addControlRow(table, 'Chaos', chaosSlider = createSlider(0, 50, 50, 0.01));
 }
 
-// Helper function to add a control row to the table
 function addControlRow(table, labelText, slider) {
   const row = createElement('tr');
   row.parent(table);
@@ -369,7 +339,16 @@ function windowResized() {
 }
 
 function textInputChanged() {
-  inputText = textInput.value().toUpperCase(); // Convert to uppercase
+  inputText = textInput.value().toUpperCase();
+  
+  // Automatically show text when typing
+  if (inputText.length > 0) {
+    showInputText = true;
+    showAllLetters = false;
+  } else {
+    // If text input is empty, revert to previous selection
+    // [logic to display either all letters or a single letter]
+  }
 }
 
 function toggleTextDisplay() {
@@ -389,6 +368,37 @@ function shapeSelectChanged() {
   } else {
     showAllLetters = false;
     currentShape = value;
+  }
+}
+
+// Mouse event handlers for scrolling
+
+
+
+// Add wheel (mousewheel) event for scrolling with mousewheel
+function mouseWheel(event) {
+  if (showInputText && inputText.length > 0) {
+    // Adjust scroll speed as needed
+    scrollX -= event.delta;
+    
+    // Calculate constraints
+    const scaleFactor = 1;
+    const letterWidth = gridWidth * scaleFactor;
+    const spacing = letterWidth * 0.3;
+    const totalWidth = (letterWidth * inputText.length) + (spacing * (inputText.length - 1));
+    
+    // Constrain scrolling to prevent excessive scrolling
+    if (totalWidth <= width) {
+      // If content fits, center it
+      scrollX = 0;
+    } else {
+      // If content doesn't fit, limit scrolling
+      const minScroll = -(totalWidth - width);
+      if (scrollX < minScroll) scrollX = minScroll;
+      if (scrollX > 0) scrollX = 0;
+    }
+    
+    return false; // Prevent default behavior
   }
 }
 
@@ -445,7 +455,7 @@ function drawSingleLetter(letterKey, rectDensity, sizeVariation, chaosLevel) {
           let x = offsetX + col * cellWidth + xOffset + (chaosXFactor * cellWidth);
           let y = offsetY + row * cellHeight + yOffset + (chaosYFactor * cellHeight);
           
-          // Size calculations
+     
           let rectWidth = map(noise(x * noiseFrequency * 0.1, y * noiseFrequency * 0.1, i + noiseSeedOffset), 0, 1, 
                              cellWidth * (sizeVariation * 0.5), 
                              cellWidth * (sizeVariation + 0.2));
@@ -467,11 +477,11 @@ function drawSingleLetter(letterKey, rectDensity, sizeVariation, chaosLevel) {
 }
 
 function drawAllLetters(rectDensity, sizeVariation, chaosLevel) {
-  const letterKeys = Object.keys(shapes).filter(key => key !== " "); // Skip space
-  const lettersPerRow = 7;
+  const letterKeys = Object.keys(shapes).filter(key => key !== " "); 
+  const lettersPerRow = 10;
   const numRows = 4;
   
-  const scaleFactor = 0.2;
+  const scaleFactor = 0.3;
   const smallGridWidth = gridWidth * scaleFactor;
   const smallGridHeight = gridHeight * scaleFactor;
   
@@ -499,45 +509,37 @@ function drawAllLetters(rectDensity, sizeVariation, chaosLevel) {
 function drawInputText(rectDensity, sizeVariation, chaosLevel) {
   if (inputText.length === 0) return;
   
-  // Calculate the scale based on text length
-  let scaleFactor = 0.2;
-  if (inputText.length <= 5) {
-    scaleFactor = 0.5;
-  } else if (inputText.length <= 10) {
-    scaleFactor = 0.3;
-  } else {
-    scaleFactor = 0.2;
-  }
+  // Use a constant scale factor instead of adjusting based on length
+  const scaleFactor = 1;
   
   const letterWidth = gridWidth * scaleFactor;
   const letterHeight = gridHeight * scaleFactor;
   const spacing = letterWidth * 0.3; 
   
-
-  const totalWidth = (letterWidth * inputText.length) + (spacing * (inputText.length - 1));
-  
-
-  let startX = (width - totalWidth) / 2;
+  // Calculate starting position from left side of canvas
+  // We'll keep this centered vertically but start from a fixed position horizontally
+  const startX = (width / 2) - ((letterWidth * inputText.length + spacing * (inputText.length - 1)) / 2);
   const startY = (height - letterHeight) / 2;
   
-
+  // Adjust density for the smaller letters
   let adjustedDensity = rectDensity * 0.6;
   
-
+  // Draw each character
+  let currentX = startX;
+  
   for (let i = 0; i < inputText.length; i++) {
     const char = inputText[i];
-  
+    
     if (shapes[char]) {
-      drawLetterAtPosition(char, startX, startY, letterWidth, letterHeight, adjustedDensity, sizeVariation, chaosLevel);
+      drawLetterAtPosition(char, currentX, startY, letterWidth, letterHeight, adjustedDensity, sizeVariation, chaosLevel);
     } else if (char === ' ') {
-
+      // Space - just advance position
     } else {
-  
-      drawLetterAtPosition('A', startX, startY, letterWidth, letterHeight, adjustedDensity, sizeVariation, chaosLevel);
+      // Unknown character - use 'A' as fallback
+      drawLetterAtPosition('A', currentX, startY, letterWidth, letterHeight, adjustedDensity, sizeVariation, chaosLevel);
     }
     
-    // Move to the next letter position
-    startX += letterWidth + spacing;
+    currentX += letterWidth + spacing;
   }
 }
 
