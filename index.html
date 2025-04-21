@@ -3,24 +3,37 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="styleh.css">
     <meta charset="utf-8" />
   </head>
   <body>
-    <!-- Add this landing page section -->
-    <section id="landing">
-      <div class="landing-content">
-       <p id="title">Pernil Sans</p>
-       <object data="arrow.svg" ></object>
-       <p id="description">is a generative typeface developed by Joaquin E. Braver in 2025. The typeface was designed with p5.js using Perlin Noise, all the rectangles that conform each letterform are completely randomized. The project is still
-        in development, so for now the typeface exists as a tool that users can interact with, until it is released.</p>
-        <p id="mail">jeb.slam@gmail.com</p>
-      </div>
-    </section>
-    
     <main>
-
+      <p id="gra">Information</p>
+      <p id="info">Perlin Sans is a project that explores the design, legibility, semiotics and manipulation of letterforms using Perlin Noise. It was designed and developed by <a href="https://yourealwaysright.blog/" target="_blank" rel="noopener noreferrer">Joaquin Echeverry Braver</a>.
+<br>
+<br>
+        New York, 2025</p>
+      <!-- Interactive p5.js canvas will be inserted here -->
     </main>
-    <script src="sketch.js"></script>
+    <script src="sketchh.js"></script>
+    <script>
+      const gra = document.getElementById("gra");
+      const info = document.getElementById("info");
+    
+      gra.addEventListener("click", function (event) {
+        info.style.display = (info.style.display === "block") ? "none" : "block";
+        event.stopPropagation(); // prevent body click from triggering right after
+      });
+    
+      info.addEventListener("click", function (event) {
+        event.stopPropagation(); // optional, keeps info open if it's clicked
+      });
+    
+      document.body.addEventListener("click", function () {
+        info.style.display = "none";
+      });
+    </script>
+    
+    
   </body>
 </html>
