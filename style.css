@@ -4,6 +4,7 @@
 html {
   scroll-behavior: smooth;
   font-family: "Geist", sans-serif;
+
   letter-spacing: -6%;
 }
 *{
@@ -13,8 +14,10 @@ html {
 body {
   margin: 0;
   padding: 0;
-  overflow-x:visible;
+  overflow-x:scroll;
+  width: 100vw;
 }
+
 
 #control-panel, #shape-select-panel, #text-input-panel {
   opacity: 1;
@@ -78,6 +81,12 @@ a:visited {
   visibility: hidden;
   flex-direction: row;
   align-items: center;
+}
+
+#textcontainer{
+  overflow-x:scroll;
+  width:400vw;
+  z-index:-100;
 }
 
 /* Panel label */
@@ -152,6 +161,7 @@ input[type="range"]::-moz-range-thumb {
   transform: translateY(-50%);
   padding: 8px;
   padding-left: 16px;
+  mix-blend-mode: multiply;
   display: flex;
   align-items: center;
   font-size: 17pt;
@@ -193,14 +203,25 @@ Copy/* Modify your existing control panel CSS */
   opacity: 1;
 }
  
-@media screen and (max-width:772px) {
-  #description {
-    font-size: 12pt;
+@media screen and (max-width:782px) {
+  #info {
+    width: 650px;
   }
-  #mail {
-    font-size: 12pt;
+  #control-panel, #shape-select-panel, #text-input-panel {
+    opacity: 1;
+    pointer-events: auto; /* Initially disable interaction */
+
   }
-  
+}
+@media screen and (max-width:600px) {
+  #info {
+    width: 500px;
+  }
+}
+  @media screen and (max-width:320px) {
+    #info {
+      width: 300px;
+    }
 }
 
 @media screen and (max-width:320px) {
