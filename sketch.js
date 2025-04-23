@@ -242,7 +242,7 @@ const shapes = {
     [1,0,0,0,1],
     [1,1,1,1,1]
   ],
-  // Add space character
+
   " ": [
     [0,0,0,0,0],
     [0,0,0,0,0],
@@ -256,7 +256,7 @@ const shapes = {
 
 let currentShape = 'A';
 let showAllLetters = false;
-let showInputText = false; // Flag to show input text
+let showInputText = true; // Flag to show input text
 
 let controlDiv;
 let shapeSelectDiv;
@@ -268,7 +268,14 @@ let scrollX = 0;
 
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  const fullWidth = window.innerWidth * 5;
+  createCanvas(fullWidth, windowHeight).parent('textcontainer').style('pointer-evnts', 'none');
+  const scrollCenter = (fullWidth/2) - (window.innerWidth/2);
+  window.scrollTo({left: scrollCenter, top:0});
+
+
+
+
   frameRate(30);
   noiseDetail(4, 0.5);
   
@@ -307,7 +314,7 @@ function setup() {
   textLabel.parent(textInputDiv);
   textLabel.style('margin-right', '10px');
     
-  textInput = createInput('');
+  textInput = createInput('PERLIN SANS');
   textInput.parent(textInputDiv);
   textInput.input(textInputChanged);
 
@@ -376,31 +383,31 @@ function shapeSelectChanged() {
 
 
 // Add wheel (mousewheel) event for scrolling with mousewheel
-function mouseWheel(event) {
-  if (showInputText && inputText.length > 0) {
-    // Adjust scroll speed as needed
-    scrollX -= event.delta;
+// function mouseWheel(event) {
+//   if (showInputText && inputText.length > 0) {
+//     // Adjust scroll speed as needed
+//     scrollX -= event.delta;
     
-    // Calculate constraints
-    const scaleFactor = 1;
-    const letterWidth = gridWidth * scaleFactor;
-    const spacing = letterWidth * 0.3;
-    const totalWidth = (letterWidth * inputText.length) + (spacing * (inputText.length - 1));
+//     // Calculate constraints
+//     const scaleFactor = 1;
+//     const letterWidth = gridWidth * scaleFactor;
+//     const spacing = letterWidth * 0.3;
+//     const totalWidth = (letterWidth * inputText.length) + (spacing * (inputText.length - 1));
     
-    // Constrain scrolling to prevent excessive scrolling
-    if (totalWidth <= width) {
-      // If content fits, center it
-      scrollX = 0;
-    } else {
-      // If content doesn't fit, limit scrolling
-      const minScroll = -(totalWidth - width);
-      if (scrollX < minScroll) scrollX = minScroll;
-      if (scrollX > 0) scrollX = 0;
-    }
+//     // Constrain scrolling to prevent excessive scrolling
+//     if (totalWidth <= width) {
+//       // If content fits, center it
+//       scrollX = 0;
+//     } else {
+//       // If content doesn't fit, limit scrolling
+//       const minScroll = -(totalWidth - width);
+//       if (scrollX < minScroll) scrollX = minScroll;
+//       if (scrollX > 0) scrollX = 0;
+//     }
     
-    return false; // Prevent default behavior
-  }
-}
+//     return false; // Prevent default behavior
+//   }
+// }
 
 function draw() {
   background(255);
