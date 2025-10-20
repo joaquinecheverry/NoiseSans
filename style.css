@@ -195,7 +195,6 @@ input[type="range"]::-moz-range-thumb {
 
 
 
-Copy/* Modify your existing control panel CSS */
 #control-panel, #shape-select-panel, #text-input-panel {
   position: fixed;
   left: 2%;
@@ -236,4 +235,122 @@ Copy/* Modify your existing control panel CSS */
     height: 100%;
     padding-left: 1vh;
   }
+}
+#zoom-control-panel {
+  position: fixed;
+  top: 65%;
+  left: 2%;
+  transform: translateY(-50%);
+  padding: 8px;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 17pt;
+}
+
+#zoom-control-panel span {
+  font-family: "Geist", sans-serif;
+  color: #000000;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+#zoom-control-panel input[type="range"] {
+  width: 150%;       
+  height: 2px;       
+  background: black;    
+  outline: none;        
+  appearance: none;     
+  color: black;
+}
+
+#zoom-control-panel input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 5px;
+  height: 20px;
+  background: black;
+  cursor: pointer;
+}
+
+#zoom-control-panel input[type="range"]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+#theme-toggle-panel {
+  position: fixed;
+  top: 58.7%;
+  left: 2%;
+  padding: 8px;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 17pt;
+  gap: 10px;
+}
+
+#theme-toggle-panel span {
+  font-family: "Geist", sans-serif;
+  color: #000000;
+  white-space: nowrap;
+}
+
+#theme-toggle-panel label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  font-size: 17pt;
+}
+
+#theme-toggle-panel input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: black;
+}
+
+/* Dark mode styles for UI elements */
+body.dark-mode {
+  background-color: #000;
+  color: #fff;
+}
+
+body.dark-mode #gra,
+body.dark-mode #info,
+body.dark-mode #control-panel,
+body.dark-mode #theme-toggle-panel span,
+body.dark-mode #zoom-control-panel span,
+body.dark-mode #text-input-panel span {
+  color: #fff;
+}
+
+body.dark-mode #text-input-panel {
+  mix-blend-mode: normal;
+}
+
+body.dark-mode #text-input-panel input {
+  color: white !important;
+  border-bottom: 2.5px solid white !important;
+  background-color: transparent !important;
+}
+
+body.dark-mode a {
+  color: white;
+}
+body.dark-mode #shape-select-panel span {
+  color: white;
+
+}
+body.dark-mode input[type="range"] {
+  background: white !important;
+}
+
+body.dark-mode input[type="range"]::-webkit-slider-thumb {
+  background: white !important;
+}
+
+body.dark-mode input[type="range"]::-moz-range-thumb {
+  background: white !important;
 }
