@@ -3,39 +3,47 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="styleh.css">
     <meta charset="utf-8" />
   </head>
   <body>
     <main>
       <div id="textcontainer"></div>
       <p id="gra">Information</p>
-      <p id="info">Perlin Sans is a project that explores the design, legibility, semiotics and manipulation of letterforms using Perlin Noise. It was designed and developed by <a href="https://yourealwaysright.blog/" target="_blank" rel="noopener noreferrer">Joaquin Echeverry Braver</a>.
+      <p id="info">Perlin Sans is a typeface that explores the design, legibility, semiotics and manipulation of letterforms using Perlin Noise. It was designed and developed by <a href="https://yourealwaysright.blog/" target="_blank" rel="noopener noreferrer">Joaquin Echeverry Braver</a>.
 <br>
 <br>
         New York, 2025</p>
     </main>
-    <script src="sketch.js"></script>
+    <script src="sketchh.js"></script>
     <script>
-      const gra = document.getElementById("gra");
-      const info = document.getElementById("info");
-    
-      gra.addEventListener("click", function (event) {
-        info.style.display = (info.style.display === "block") ? "none" : "block";
-        event.stopPropagation(); // prevent body click from triggering right after
-      });
-    
-      info.addEventListener("click", function (event) {
-        event.stopPropagation(); // optional, keeps info open if it's clicked
-      });
-    
-      document.body.addEventListener("click", function () {
-        info.style.display = "none";
-      });
+        const gra = document.getElementById("gra");
+  const info = document.getElementById("info");
+
+  gra.addEventListener("click", function (event) {
+    info.style.display = (info.style.display === "block") ? "none" : "block";
+    event.stopPropagation();
+  });
+
+  info.addEventListener("click", function (event) {
+    event.stopPropagation();
+  });
+
+  document.body.addEventListener("click", function () {
+    info.style.display = "none";
+  });
+
+  // Theme synchronization
+  setInterval(() => {
+    if (typeof darkMode !== 'undefined') {
+      if (darkMode) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    }
+  }, 100);
     </script>
-    
-    
-  </body>
     
     
   </body>
