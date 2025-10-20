@@ -1,11 +1,13 @@
-let densitySlider, sizeSlider, speedSlider, chaosSlider;
+let densitySlider, sizeSlider, speedSlider, chaosSlider, zoomSlider;
 let shapeSelect;
-let textInput; // Text input field
-let inputText = "PERLIN SANS"; // Store the user's input text
+let textInput; 
+let inputText = "PERLIN SANS"; 
 let noiseOffset = 0;
 let gridWidth, gridHeight;
 let padding = 100;
 const noiseFrequency = 0.7;
+let darkMode = false;
+let themeToggle;
 
 const shapes = {
   A: [
@@ -242,7 +244,186 @@ const shapes = {
     [1,0,0,0,1],
     [1,1,1,1,1]
   ],
-
+  1: [
+    [0,0,1,0,0],
+    [0,1,1,0,0],
+    [1,0,1,0,0],
+    [0,0,1,0,0],
+    [0,0,1,0,0],
+    [0,0,1,0,0],
+    [0,0,1,0,0]
+  ],
+  2: [
+    [0,1,1,1,0],
+    [1,0,0,0,1],
+    [0,0,0,1,0],
+    [0,0,1,0,0],
+    [0,1,0,0,0],
+    [1,0,0,0,0],
+    [1,1,1,1,1]
+  ],
+  3: [
+    [0,1,1,1,0],
+    [1,0,0,0,1],
+    [0,0,0,1,0],
+    [0,0,1,1,0],
+    [0,0,0,0,1],
+    [1,0,0,0,1],
+    [0,1,1,1,0]
+  ],
+  4: [
+    [0,1,0,0,1],
+    [0,1,0,0,1],
+    [1,0,0,0,1],
+    [1,1,1,1,1],
+    [0,0,0,0,1],
+    [0,0,0,0,1],
+    [0,0,0,0,1]
+  ],
+  5: [
+    [1,1,1,1,1],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,1,1,1,1],
+    [0,0,0,0,1],
+    [0,0,0,0,1],
+    [1,1,1,1,0]
+  ],
+  6: [
+    [0,1,1,1,1],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,1,1,1,1],
+    [1,0,0,0,1],
+    [1,0,0,0,1],
+    [1,1,1,1,1]
+  ],
+  7: [
+    [1,1,1,1,1],
+    [0,0,0,0,1],
+    [0,0,0,1,0],
+    [0,0,1,0,0],
+    [0,1,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0]
+  ],
+  8: [
+    [0,1,1,1,0],
+    [1,0,0,0,1],
+    [1,0,0,0,1],
+    [0,1,1,1,0],
+    [1,0,0,0,1],
+    [1,0,0,0,1],
+    [0,1,1,1,0]
+  ],
+  9: [
+    [1,1,1,1,1],
+    [1,0,0,0,1],
+    [1,0,0,0,1],
+    [1,1,1,1,1],
+    [0,0,0,0,1],
+    [0,0,0,0,1],
+    [1,1,1,1,0]
+  ],
+  ",": [
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0]
+  ],
+  ".": [
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [1,0,0,0,0]
+  ],
+  ";": [
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [1,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0]
+  ],
+  ":": [
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [1,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [1,0,0,0,0]
+  ],
+  "!": [
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [0,0,0,0,0],
+    [1,0,0,0,0]
+  ],
+  "?": [
+    [0,1,1,1,0],
+    [1,0,0,0,1],
+    [0,0,0,0,1],
+    [0,0,1,1,0],
+    [0,0,1,0,0],
+    [0,0,0,0,0],
+    [0,0,1,0,0]
+  ],
+  "(": [
+    [0,1,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [1,0,0,0,0],
+    [0,1,0,0,0]
+  ],
+  ")": [
+    [0,0,0,1,0],
+    [0,0,0,0,1],
+    [0,0,0,0,1],
+    [0,0,0,0,1],
+    [0,0,0,0,1],
+    [0,0,0,0,1],
+    [0,0,0,1,0]
+  ],
+  "-": [
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,1,1,1,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0]
+  ],
+  "=": [
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [1,1,1,1,1],
+    [0,0,0,0,0],
+    [1,1,1,1,1],
+    [0,0,0,0,0],
+    [0,0,0,0,0]
+  ],
+  "+": [
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,1,0,0],
+    [0,1,1,1,0],
+    [0,0,1,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0]
+  ],
   " ": [
     [0,0,0,0,0],
     [0,0,0,0,0],
@@ -255,26 +436,22 @@ const shapes = {
 };
 
 let currentShape = 'A';
-let showAllLetters = false;
-let showInputText = true; // Flag to show input text
+let showAllLetters = true;
+let showInputText = false;
 
 let controlDiv;
 let shapeSelectDiv;
-let textInputDiv; // Div for text input
+let textInputDiv;
+let zoomControlDiv;
+let themeToggleDiv;
 
 let scrollX = 0;
-
-
-
 
 function setup() {
   const fullWidth = window.innerWidth * 5;
   createCanvas(fullWidth, windowHeight).parent('textcontainer').style('pointer-evnts', 'none');
   const scrollCenter = (fullWidth/2) - (window.innerWidth/2);
   window.scrollTo({left: scrollCenter, top:0});
-
-
-
 
   frameRate(30);
   noiseDetail(4, 0.5);
@@ -290,9 +467,17 @@ function setup() {
   shapeSelectDiv = createDiv('');
   shapeSelectDiv.id('shape-select-panel');
   
-  // Create a div for text input (now separate from shape selector)
+  // Create a div for text input
   textInputDiv = createDiv('');
   textInputDiv.id('text-input-panel');
+  
+  // Create a div for zoom controls
+  zoomControlDiv = createDiv('');
+  zoomControlDiv.id('zoom-control-panel');
+  
+  // Create a div for theme toggle
+  themeToggleDiv = createDiv('');
+  themeToggleDiv.id('theme-toggle-panel');
   
   // Create the shape selector in its own div
   const shapeLabel = createElement('span', 'Select Letter:');
@@ -301,15 +486,20 @@ function setup() {
   
   shapeSelect = createSelect();
   shapeSelect.parent(shapeSelectDiv);
-  shapeSelect.option('All'); // Add "All" option
+  shapeSelect.option('All');
   for (const shape in shapes) {
-    if (shape !== " ") { // Don't add space to dropdown
+    if (shape !== " ") {
       shapeSelect.option(shape);
     }
   }
+  shapeSelect.selected('All');
   shapeSelect.changed(shapeSelectChanged);
   
-  // Create text input field (now always visible)
+  // Set initial state to show all letters
+  showAllLetters = false;
+  showInputText = true;
+  
+  // Create text input field
   const textLabel = createElement('span', 'Enter Text:');
   textLabel.parent(textInputDiv);
   textLabel.style('margin-right', '10px');
@@ -317,6 +507,23 @@ function setup() {
   textInput = createInput('PERLIN SANS');
   textInput.parent(textInputDiv);
   textInput.input(textInputChanged);
+
+  // Create zoom controls
+  const zoomLabel = createElement('span', 'Zoom:');
+  zoomLabel.parent(zoomControlDiv);
+  zoomLabel.style('margin-right', '10px');
+  
+  zoomSlider = createSlider(0.1, 1, 0.5, 0.05);
+  zoomSlider.parent(zoomControlDiv);
+  
+  // Create theme toggle
+  const themeLabel = createElement('span', 'Theme:');
+  themeLabel.parent(themeToggleDiv);
+  themeLabel.style('margin-right', '10px');
+  
+  themeToggle = createCheckbox('Dark', false);
+  themeToggle.parent(themeToggleDiv);
+  themeToggle.changed(toggleTheme);
 
   const table = createElement('table');
   table.parent(controlDiv);
@@ -348,22 +555,9 @@ function windowResized() {
 function textInputChanged() {
   inputText = textInput.value().toUpperCase();
   
-  // Automatically show text when typing
   if (inputText.length > 0) {
     showInputText = true;
     showAllLetters = false;
-  } else {
-    // If text input is empty, revert to previous selection
-    // [logic to display either all letters or a single letter]
-  }
-}
-
-function toggleTextDisplay() {
-  if (inputText.length > 0) {
-    showInputText = !showInputText;
-    if (showInputText) {
-      showAllLetters = false;
-    }
   }
 }
 
@@ -374,50 +568,28 @@ function shapeSelectChanged() {
     showInputText = false;
   } else {
     showAllLetters = false;
+    showInputText = false;
     currentShape = value;
   }
 }
 
-// Mouse event handlers for scrolling
-
-
-
-// Add wheel (mousewheel) event for scrolling with mousewheel
-// function mouseWheel(event) {
-//   if (showInputText && inputText.length > 0) {
-//     // Adjust scroll speed as needed
-//     scrollX -= event.delta;
-    
-//     // Calculate constraints
-//     const scaleFactor = 1;
-//     const letterWidth = gridWidth * scaleFactor;
-//     const spacing = letterWidth * 0.3;
-//     const totalWidth = (letterWidth * inputText.length) + (spacing * (inputText.length - 1));
-    
-//     // Constrain scrolling to prevent excessive scrolling
-//     if (totalWidth <= width) {
-//       // If content fits, center it
-//       scrollX = 0;
-//     } else {
-//       // If content doesn't fit, limit scrolling
-//       const minScroll = -(totalWidth - width);
-//       if (scrollX < minScroll) scrollX = minScroll;
-//       if (scrollX > 0) scrollX = 0;
-//     }
-    
-//     return false; // Prevent default behavior
-//   }
-// }
+function toggleTheme() {
+  darkMode = themeToggle.checked();
+}
 
 function draw() {
-  background(255);
+  // Set background and fill colors based on theme
+  if (darkMode) {
+    background(0);
+  } else {
+    background(255);
+  }
   
   let noiseSpeed = speedSlider.value();
   let rectDensity = densitySlider.value();
   let sizeVariation = sizeSlider.value();
   let chaosLevel = chaosSlider.value();
   
-  // Update noise offset based on speed
   noiseOffset += noiseSpeed;
   
   if (showInputText && inputText.length > 0) {
@@ -434,11 +606,9 @@ function drawSingleLetter(letterKey, rectDensity, sizeVariation, chaosLevel) {
   const rows = activeShape.length;      
   const cols = activeShape[0].length;   
   
-  // Calculate cell dimensions based on the grid size, not the canvas size
   const cellWidth = gridWidth / cols;
   const cellHeight = gridHeight / rows;
   
-  // Calculate offset to center the grid in the canvas
   const offsetX = (width - gridWidth) / 2;
   const offsetY = (height - gridHeight) / 2;
   
@@ -450,19 +620,15 @@ function drawSingleLetter(letterKey, rectDensity, sizeVariation, chaosLevel) {
         let numRects = Math.floor(map(noise(col * noiseFrequency, row * noiseFrequency, noiseSeedOffset), 0, 1, rectDensity - 5, rectDensity));
         
         for (let i = 0; i < numRects; i++) {
-          // Apply chaos level to position offsets
           let chaosXFactor = map(noise(col * noiseFrequency * 2, row * noiseFrequency * 2, i + noiseSeedOffset), 0, 1, -chaosLevel, chaosLevel);
           let chaosYFactor = map(noise(row * noiseFrequency * 2, col * noiseFrequency * 2, i + noiseSeedOffset), 0, 1, -chaosLevel, chaosLevel);
           
-          // Calculate base position within the cell
           let xOffset = map(noise(col * noiseFrequency, row * noiseFrequency, i + noiseSeedOffset), 0, 1, 0, cellWidth);
           let yOffset = map(noise(row * noiseFrequency, col * noiseFrequency, i + noiseSeedOffset), 0, 1, 0, cellHeight);
           
-          // Apply chaos to position
           let x = offsetX + col * cellWidth + xOffset + (chaosXFactor * cellWidth);
           let y = offsetY + row * cellHeight + yOffset + (chaosYFactor * cellHeight);
           
-     
           let rectWidth = map(noise(x * noiseFrequency * 0.1, y * noiseFrequency * 0.1, i + noiseSeedOffset), 0, 1, 
                              cellWidth * (sizeVariation * 0.5), 
                              cellWidth * (sizeVariation + 0.2));
@@ -473,7 +639,7 @@ function drawSingleLetter(letterKey, rectDensity, sizeVariation, chaosLevel) {
           push();
           translate(x, y);
           noStroke();
-          fill(0); // Black fill
+          fill(darkMode ? 255 : 0);
           rectMode(CENTER);
           rect(0, 0, rectWidth, rectHeight);
           pop();
@@ -485,14 +651,14 @@ function drawSingleLetter(letterKey, rectDensity, sizeVariation, chaosLevel) {
 
 function drawAllLetters(rectDensity, sizeVariation, chaosLevel) {
   const letterKeys = Object.keys(shapes).filter(key => key !== " "); 
-  const lettersPerRow = 10;
-  const numRows = 4;
+  const lettersPerRow = 9;
+  const numRows = 3;
   
-  const scaleFactor = 0.3;
+  const scaleFactor = 0.15;
   const smallGridWidth = gridWidth * scaleFactor;
   const smallGridHeight = gridHeight * scaleFactor;
   
-  const spacing = 20;
+  const spacing = 30;
   const totalWidth = (smallGridWidth * lettersPerRow) + (spacing * (lettersPerRow - 1));
   const totalHeight = (smallGridHeight * numRows) + (spacing * (numRows - 1));
   
@@ -506,7 +672,14 @@ function drawAllLetters(rectDensity, sizeVariation, chaosLevel) {
     const row = Math.floor(i / lettersPerRow);
     const col = i % lettersPerRow;
     
-    const x = startX + col * (smallGridWidth + spacing);
+    let rowStartX = startX;
+    if (row === 2) {
+      const lettersInLastRow = letterKeys.length - (lettersPerRow * 2);
+      const lastRowWidth = (smallGridWidth * lettersInLastRow) + (spacing * (lettersInLastRow - 1));
+      rowStartX = (width - lastRowWidth) / 2;
+    }
+    
+    const x = rowStartX + col * (smallGridWidth + spacing);
     const y = startY + row * (smallGridHeight + spacing);
     
     drawLetterAtPosition(letterKey, x, y, smallGridWidth, smallGridHeight, smallerDensity, sizeVariation, chaosLevel);
@@ -516,22 +689,18 @@ function drawAllLetters(rectDensity, sizeVariation, chaosLevel) {
 function drawInputText(rectDensity, sizeVariation, chaosLevel) {
   if (inputText.length === 0) return;
   
-  // Use a constant scale factor instead of adjusting based on length
-  const scaleFactor = 1;
+  // Use zoom slider value
+  const scaleFactor = zoomSlider.value();
   
   const letterWidth = gridWidth * scaleFactor;
   const letterHeight = gridHeight * scaleFactor;
   const spacing = letterWidth * 0.3; 
   
-  // Calculate starting position from left side of canvas
-  // We'll keep this centered vertically but start from a fixed position horizontally
   const startX = (width / 2) - ((letterWidth * inputText.length + spacing * (inputText.length - 1)) / 2);
   const startY = (height - letterHeight) / 2;
   
-  // Adjust density for the smaller letters
   let adjustedDensity = rectDensity * 0.6;
   
-  // Draw each character
   let currentX = startX;
   
   for (let i = 0; i < inputText.length; i++) {
@@ -542,7 +711,6 @@ function drawInputText(rectDensity, sizeVariation, chaosLevel) {
     } else if (char === ' ') {
       // Space - just advance position
     } else {
-      // Unknown character - use 'A' as fallback
       drawLetterAtPosition('A', currentX, startY, letterWidth, letterHeight, adjustedDensity, sizeVariation, chaosLevel);
     }
     
@@ -567,19 +735,15 @@ function drawLetterAtPosition(letterKey, offsetX, offsetY, letterWidth, letterHe
         numRects = max(1, numRects); 
         
         for (let i = 0; i < numRects; i++) {
-          // Apply chaos level to position offsets
           let chaosXFactor = map(noise(col * noiseFrequency * 2, row * noiseFrequency * 2, i + noiseSeedOffset), 0, 1, -chaosLevel, chaosLevel);
           let chaosYFactor = map(noise(row * noiseFrequency * 2, col * noiseFrequency * 2, i + noiseSeedOffset), 0, 1, -chaosLevel, chaosLevel);
           
-          // Calculate base position within the cell
           let xOffset = map(noise(col * noiseFrequency, row * noiseFrequency, i + noiseSeedOffset), 0, 1, 0, cellWidth);
           let yOffset = map(noise(row * noiseFrequency, col * noiseFrequency, i + noiseSeedOffset), 0, 1, 0, cellHeight);
           
-          // Apply chaos to position
           let x = offsetX + col * cellWidth + xOffset + (chaosXFactor * cellWidth);
           let y = offsetY + row * cellHeight + yOffset + (chaosYFactor * cellHeight);
           
-          // Size calculations - smaller sizes for grid view
           let rectWidth = map(noise(x * noiseFrequency * 0.1, y * noiseFrequency * 0.1, i + noiseSeedOffset), 0, 1, 
                             cellWidth * (sizeVariation * 0.5), 
                             cellWidth * (sizeVariation + 0.2));
@@ -590,7 +754,7 @@ function drawLetterAtPosition(letterKey, offsetX, offsetY, letterWidth, letterHe
           push();
           translate(x, y);
           noStroke();
-          fill(0); // Black fill
+          fill(darkMode ? 255 : 0);
           rectMode(CENTER);
           rect(0, 0, rectWidth, rectHeight);
           pop();
