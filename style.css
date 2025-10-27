@@ -18,6 +18,14 @@ body {
   width: 100vw;
 }
 
+#mobilecover {
+  width: 10000px;
+  height: 10000px;
+  visibility: hidden;
+  position:absolute;
+  z-index: 2000000;
+  background-color: white;
+}
 
 #control-panel, #shape-select-panel, #text-input-panel {
   opacity: 1;
@@ -209,17 +217,25 @@ input[type="range"]::-moz-range-thumb {
   #control-panel, #shape-select-panel, #text-input-panel {
     opacity: 1;
     pointer-events: auto; /* Initially disable interaction */
-
+#mobilecover {
+  visibility: visible;
+}
   }
 }
 @media screen and (max-width:600px) {
   #info {
     width: 500px;
   }
+  #mobilecover {
+  visibility: visible;
+}
 }
   @media screen and (max-width:320px) {
     #info {
       width: 300px;
+      #mobilecover {
+  visibility: visible;
+}
     }
 }
 
@@ -227,6 +243,9 @@ input[type="range"]::-moz-range-thumb {
   #title{
     font-size:30vw;
     line-height:90%;
+    #mobilecover {
+  visibility: visible;
+}
   }
 
   .landing-content {
