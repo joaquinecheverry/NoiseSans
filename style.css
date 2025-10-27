@@ -25,6 +25,8 @@ body {
   position:absolute;
   z-index: 2000000;
   background-color: white;
+  color: white;
+  text-align: center;
 }
 
 #control-panel, #shape-select-panel, #text-input-panel {
